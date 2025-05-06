@@ -1,13 +1,45 @@
 .login {
   height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: url("https://images.pexels.com/photos/1755288/pexels-photo-1755288.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+  background-size: cover;
 
   .loginContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    .loginHeader {
+      font-weight: bold;
+      color: #0071c2;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+      h2 {
+        // background: linear-gradient(90deg, #C96A72 2.52%, #AFDAA4 50.27%, #C96971 89.21%);
+        background: linear-gradient(
+          90deg,
+          #0bd365 2.52%,
+          #e7e2e2 50.27%,
+          #05d439 89.21%
+        );
+        background-size: 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientAnimation 3s infinite;
+      }
+    }
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
 
     .loginInput {
       height: 30px;
@@ -27,6 +59,19 @@
     .loginButton:disabled {
       background-color: #0071c28c;
       cursor: not-allowed;
+    }
+
+    span {
+      color: #df0f0f;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .icon {
+        font-size: 22px;
+        margin: 0px 10px;
+      }
     }
   }
 }

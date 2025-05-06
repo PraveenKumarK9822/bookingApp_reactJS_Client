@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
-import "./Login.scss";
+import "./login.scss";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -15,24 +16,35 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setCredentials((prev) => ({...prev, [e.target.id]: e.target.value}))
-  }
+    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
 
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post("/auth/login", credentials);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      navigate("/");
+      if (res.data.isAdmin) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+        navigate("/");
+      } else {
+        dispatch({
+          type: "LOGIN_FAILURE",
+          payload: { message: "You are not allowed to login!" },
+        });
+      }
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
     }
-  }
+  };
 
   return (
     <div className="login">
       <div className="loginContainer">
+        <div className="loginHeader">
+          <h1>Dada booking..</h1>
+          <h2>Sign in</h2>
+        </div>
         <input
           type="text"
           placeholder="username"
@@ -54,7 +66,12 @@ const Login = () => {
         >
           Login
         </button>
-        {error && <span>{error.message}</span>}
+        {error && (
+          <span>
+            <ErrorIcon className="icon" />
+            {error.message}
+          </span>
+        )}
       </div>
     </div>
   );
