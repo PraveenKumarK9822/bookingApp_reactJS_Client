@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
-import "./login.scss";
+import "./Login.scss";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ErrorIcon from "@mui/icons-material/Error";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -68,7 +69,7 @@ const Login = () => {
         </button>
         {error && (
           <span>
-            <ErrorIcon className="icon" />
+            <FontAwesomeIcon icon={faExclamationCircle} />
             {error.message}
           </span>
         )}
